@@ -1,16 +1,10 @@
 <?php 
 
 try {
-    $db = new PDO('mysql:host=localhost; dbname=yade','root','');
+    $db = new PDO('mysql:host=localhost; dbname=yade','root','p0f2R4T3J9U4o1o');
     // echo'Connexion etablie !';
 } catch (Exception $e) {
     die($e->getMessage()); 
 }
 
-// faire disparaitre les voyages dont le nombre de place sont fini 
-//Nom
-// prenom
-// numero 
-// adresse
-// nbre de place 1
 ?>
