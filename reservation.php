@@ -31,7 +31,7 @@ try {
         exit();
     }
 
-    // Vérifier si le nombre de places demandées est inférieur ou égal aux places disponibles
+    // Vérifier si le nombre de places demandées est inférieur ou égal aux places disponibless
     if ($nbPlace > $voyage['nbPlace']) {
         echo json_encode(["error" => "Le nombre de places demandées dépasse le nombre de places disponibles."]);
         exit();
