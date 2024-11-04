@@ -3,6 +3,7 @@ header("Access-Control-Allow-Origin: *");
 header("Content-Type: application/json; charset=UTF-8");
 
 include 'connexion.php';
+include 'generer_recu.php';
 
 // Récupérer les données de la requête
 $idVoyage = isset($_POST['idVoyage']) ? (int)$_POST['idVoyage'] : null;
@@ -52,9 +53,54 @@ try {
     $stmt->bindParam(':nbPlace', $nbPlace, PDO::PARAM_INT);
     $stmt->bindParam(':idVoyage', $idVoyage, PDO::PARAM_INT);
     $stmt->execute();
+    
+    if($stmt){
+        // Vérifiez que l'ID de réservation est fourni (par exemple, depuis une requête GET ou POST)
+        $idReserv = isset($_GET['idReserv']) ? (int)$_GET['idReserv'] : null;
+
+        if ($idReserv) {
+            generateRecu($idReserv);
+        } else {
+            echo json_encode(["error" => "ID de réservation requis."]);
+        }
+    }
 
     echo json_encode(["message" => "Réservation effectuée avec succès."]);
 } catch (PDOException $e) {
     echo json_encode(["error" => $e->getMessage()]);
 }
+
+//   // Définition de la fonction generateRecu
+// function generateRecu($idReserv) {
+//     global $db; // S'assurer que $db est accessible dans la fonction
+//     try {
+//         $req = $db->prepare("SELECT * FROM reservations WHERE idReserv = :idReserv");
+//         $req->bindParam(':idReserv', $idReserv, PDO::PARAM_INT);
+//         $req->execute();
+        
+//         $levels = $req->fetchAll(PDO::FETCH_ASSOC);
+        
+//         class PDF extends FPDF {
+//             function Header(){
+//                 $this->Image('');
+//                 $this->SetFont('Arial','B',15); 
+//                 $this->Cell(30,10,'Réçu de la réservation',1,0, 'C');
+//                 $this->Cell(80);
+//                 $this->Ln(30);
+//             }
+
+//             function Footer(){}
+
+//         }
+//         $pdf = New PDF();
+//         $pdf->AliasNbPages();
+//         $pdf->SetFont('Times New Roman', '', 11);
+//         $pdf->Output();
+
+        
+//         echo json_encode($levels); // Retourne les données sous forme JSON
+//     } catch (PDOException $e) {
+//         echo json_encode(["error" => $e->getMessage()]);
+//     }
+// }
 ?>
