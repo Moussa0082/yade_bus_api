@@ -9,7 +9,7 @@ $idDepart = isset($_GET['idDepart']) ? (int)$_GET['idDepart'] : ""; // Valeur pa
 
 try {
     // Préparation de la requête avec un paramètre
-    $stmt = $db->prepare("SELECT libelle, idPays, idLevel , idVoyage FROM levels INNER JOIN voyage ON levels.idLevel = voyage.idDest WHERE voyage.idDepart = :idDepart");
+    $stmt = $db->prepare("SELECT distinct libelle, idPays, idLevel , idVoyage FROM levels INNER JOIN voyage ON levels.idLevel = voyage.idDest WHERE voyage.idDepart = :idDepart");
     $stmt->bindParam(':idDepart', $idDepart, PDO::PARAM_INT);
     $stmt->execute();
 

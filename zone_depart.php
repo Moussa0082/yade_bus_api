@@ -5,7 +5,7 @@ header("Content-Type: application/json; charset=UTF-8");
 include 'connexion.php'; // Inclure le fichier de connexion
 
 try {
-    $stmt = $db->query("SELECT libelle, idPays, idLevel FROM levels INNER JOIN voyage ON levels.idLevel = voyage.idDepart");
+    $stmt = $db->query("SELECT distinct libelle, idPays, idLevel FROM levels INNER JOIN voyage ON levels.idLevel = voyage.idDepart");
 
     $levels = [];
     while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
